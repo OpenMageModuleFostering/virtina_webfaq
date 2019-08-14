@@ -1,0 +1,146 @@
+<?php
+ 
+ /**
+ * Virtina
+ * @package    Virtina_Faq
+ * @copyright  Copyright (c) 2015-2016 Virtina. (http://www.virtina.com)
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+?>
+<?php $Module_status      = $this->getModuleStatus(); ?>
+<?php $show_date_status   = $this->getDateStatus(); ?>
+<?php $faq_custom_heading = $this->getCustomHeading();?>
+
+<?php if($Module_status==1):?>
+<div class="faq" id="faq">	
+<div id="success" style="display:none;" >
+	<ul class="messages">
+		<li class="success-msg">
+			<ul>
+				<li><span>Your question has been submitted successfully.</span></li>
+			</ul>
+		</li>
+	</ul>
+</div>
+<div id="failure" style="display:none;" autofocus >
+	<ul class="messages">
+		<li class="error-msg">
+			<ul>
+				<li><span>Unable to send</span></li>
+			</ul>
+		</li>
+	</ul>
+</div>
+
+<h1><?php echo $this->__($faq_custom_heading) ?></h1>
+<div><?php echo $this->getPagerHtml(); ?></div>
+<?php $collection = $this->getCollection(); ?>
+<?php if($collection->getSize()):  ?>
+<div>
+	<ul id="accordion">
+		<?php $i = 0;   
+		foreach ($collection as $item) {
+			$i = $i+1; ?>
+			 <li><div><?php echo $item->getSubject(); ?></div>
+				<ul>
+					<li>
+						<?php if($show_date_status)echo "Posted on : ".$item->getPostedTime(); ?>
+					</li>
+					<li class="questionfaq">
+						<div class="question-ans"><?php echo "Qns:" ?></div>
+						<?php echo $item->getQuestion(); ?>
+					</li>
+					<li class="answerfaq">
+						<div class="question-ans"><?php echo "Ans:" ?></div> 
+						<?php $_cmsHelper = Mage::helper('cms');?>
+						<?php $_process = $_cmsHelper->getBlockTemplateProcessor();?>
+						<?php echo $_process->filter($item["answer"]); ?>
+					</li>									
+				</ul>
+			</li>
+	<?php } ?>
+	</ul>
+</div>
+<?php endif ?>
+<div class="faqform">
+	<h2><?php echo $this->__('ASK A QUESTION') ?></h2>
+	<div id="messages_product_view"><?php  echo $this->getMessagesBlock()->getGroupedHtml() ?></div>
+		<form  method="post" enctype="multipart/form-data" id="faq_form">
+			<div class="fieldset">
+				<ul class="faq-form-list">
+					<li class="faq-li">
+						<label for="name" class="required"><em>*</em><?php echo Mage::helper('faq')->__('Name:') ?></label>
+						<div class="input-box">
+							<input style="font-size:14px;" name="name" id="name" value="" class="input-text required-entry" type="text" size="29"/>
+						</div>
+					</li> 
+					<li class="faq-li">
+					<label for="email" class="required"><em>*</em><?php echo Mage::helper('contacts')->__('Email:') ?></label>
+						<div class="input-box">
+							<input style="font-size:14px;" name="email" id="email" title="<?php echo Mage::helper('core')->quoteEscape(Mage::helper('contacts')->__('Email')) ?>" value="<?php echo $this->escapeHtml($this->helper('contacts')->getUserEmail()) ?>" class="input-text required-entry validate-email" type="email" autocapitalize="off" autocorrect="off" spellcheck="false" size="29" />
+						</div> 
+					</li>
+					<li class="faq-li">
+						<label for="subject" class="required"><em>*</em><?php echo Mage::helper('faq')->__('Subject:') ?></label>
+						<div class="input-box">
+							<input style="font-size:14px;" name="subject" id="subject" value="" class="input-text required-entry" type="text" size="29"/>
+						</div>
+					</li>
+					<li class="faq-li">
+						<label for="comment" class="required"><em>*</em><?php echo Mage::helper('faq')->__('Question') ?></label>
+						<div class="input-box">
+							<textarea name="question" id="question" title="<?php echo Mage::helper('core')->quoteEscape(Mage::helper('faq')->__('Question')) ?>" class="required-entry input-text" cols="32" rows="3"></textarea>
+						</div>
+					</li>
+				</ul>
+			</div>
+			<div class="buttons-set">
+				<input type="text" name="hideit" id="hideit" value="" style="display:none !important;" />
+				<button type="button" onclick="doAjax()" title="<?php echo Mage::helper('faq')->__('Submit') ?>" id="faqbutton"  class="button"><span><span><?php echo Mage::helper('faq')->__('Submit') ?></span></span></button>
+			</div>
+		</form>
+	</div>
+</div>
+<?php endif ?>
+
+<script type="text/javascript">
+	var eventsForm = new VarienForm('events_form', true);
+	var jQuery = jQuery.noConflict();
+	jQuery("#accordion > li > div").click(function(){
+	 
+		if(false == jQuery(this).next().is(':visible')) {
+			jQuery('#accordion ul').slideUp(300);
+		}
+		jQuery(this).next().slideToggle(300);
+	});	 
+	jQuery('#accordion ul:eq(0)').show();
+</script>
+<script>   
+	function doAjax(){	
+		var faq_form = new VarienForm('faq_form', true);		
+		var name = $('name').getValue();
+		var email = $('email').getValue();
+		var subject = $('subject').getValue();
+		var question = $('question').getValue();
+		var formId = 'faq_form';
+		if (faq_form.validator.validate()) {
+			var url = '<?php  echo $this->getUrl('faq/index/save') ?>';			
+			new Ajax.Request(url, {
+			method:'post',
+			parameters: { name:name,email:email,subject:subject,question:question} ,			
+			onSuccess: function() {
+                   $(formId).reset();
+                   Element.hide('failure');                  
+                   Element.show('success');
+                   window.location.hash = '#faq';
+            },
+            onFailure: function() {
+                   $(formId).reset();
+                   Element.hide('success');
+                   Element.show('failure');
+                   window.location.hash = '#faq';
+			}
+			});
+		}
+	}
+</script> 

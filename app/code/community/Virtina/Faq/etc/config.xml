@@ -1,0 +1,174 @@
+<?xml version="1.0"?>
+
+<!--
+ * Virtina
+ * @package    Virtina_Faq
+ * @copyright  Copyright (c) 2015-2016 Virtina. (http://www.virtina.com)
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+-->
+
+<config>
+    <modules>
+        <Virtina_Faq>
+            <version>0.0.1</version>
+        </Virtina_Faq>
+    </modules>
+    <frontend>
+        <routers>
+            <Faq>
+                <use>standard</use>
+                <args>
+                    <module>Virtina_Faq</module>
+                    <frontName>faq</frontName>
+                </args>
+            </Faq>
+        </routers>
+        <layout>
+            <updates>
+                <Faq>
+                    <file>webfaq/faq.xml</file>
+                </Faq>
+            </updates>
+        </layout>
+         <events>
+            <page_block_html_topmenu_gethtml_before>
+                <observers>
+                    <faq>
+                        <class>faq/observer</class>
+                        <method>addToTopmenu</method>
+                    </faq>
+                </observers>
+            </page_block_html_topmenu_gethtml_before>
+        </events>
+    </frontend> 
+   <admin>
+		<routers>
+			<adminhtml>
+				<args>
+					<modules>
+						<Virtina_Faq after="Mage_Adminhtml">Virtina_Faq_Adminhtml</Virtina_Faq>
+					</modules>
+				</args>
+			</adminhtml>
+		</routers>
+	</admin>
+	<adminhtml>
+	 <menu>
+	   <faq module="faq">
+			<title>Website FAQ</title>
+			<sort_order>85</sort_order>
+			<children>
+				<faq module="faq">
+					<title>Manage FAQs</title>
+					<sort_order>1</sort_order>
+					<action>adminhtml/faq</action>
+				</faq>
+				<webfaqtab1 module="faq">
+					<title>Settings</title>
+					<sort_order>2</sort_order>
+					<action>adminhtml/system_config/edit/section/webfaqtab1</action>
+				</webfaqtab1>
+			</children>
+	   </faq>
+	 </menu>
+	 <acl>
+		<resources>
+			<all>
+				<title>Allow Everything</title>
+			</all>
+				<admin>
+					<children>
+					   <faq module="faq">
+							<title>Website FAQ</title>
+							<sort_order>85</sort_order>
+							<children>
+								<faq module="faq">
+									<title>Manage FAQs</title>
+									<sort_order>1</sort_order>
+								</faq>
+								<webfaqtab1 module="faq">
+									<title>Settings</title>
+									<sort_order>2</sort_order>
+								</webfaqtab1>
+							</children>
+					   </faq>
+					</children>
+				</admin>
+			</resources>   
+        </acl>-
+        <layout>
+            <updates>
+                <faq>
+                    <file>webfaq/faq.xml</file>
+                </faq>
+            </updates>
+        </layout>
+	</adminhtml>
+    <global>
+	  <models>
+		<faq>
+			<class>Virtina_Faq_Model</class>
+			<resourceModel>faq_mysql4</resourceModel>		
+		</faq>
+		<faq_mysql4>
+			<class>Virtina_Faq_Model_Mysql4</class>
+			<entities>
+				<faq>
+					<table>faq_details</table>
+				</faq>
+			</entities>                
+		</faq_mysql4>
+      </models>
+      <resources>
+		<faq_setup>
+			<setup>
+				<module>Virtina_Faq</module>
+			</setup>
+		</faq_setup>
+		<faq_read>
+			<connection>
+				<use>core_read</use>
+			</connection>
+		</faq_read>                        
+		<faq_write>
+			<connection>
+				<use>core_write</use>
+			</connection>
+		</faq_write>  
+      </resources>
+	  <blocks>
+		<faq>
+		  <class>Virtina_Faq_Block</class>
+		</faq>
+	  </blocks>
+	  <helpers>
+		<faq>
+		  <class>Virtina_Faq_Helper</class>
+		</faq>
+	  </helpers>
+	  <template>
+		<email>
+			<faq_template  translate="label">
+				<label>FAQ Admin Notification</label>
+				<file>webfaq/faq_admin_notify.html</file>  
+				<type>html</type>
+			</faq_template>
+			<faq_customer_template  translate="label">
+				<label>FAQ Customer Notification</label>
+				<file>webfaq/faq_customer_notify.html</file> 
+				<type>html</type>
+			</faq_customer_template>
+		</email>
+       </template>	  	          
+    </global> 
+    <default>
+        <webfaqtab1>
+            <general>
+                <activemodule>1</activemodule>
+                <activejquery>0</activejquery>
+                <showposteddate>1</showposteddate>
+                <adminnotification>1</adminnotification>
+            </general>
+        </webfaqtab1>
+    </default>   
+</config>

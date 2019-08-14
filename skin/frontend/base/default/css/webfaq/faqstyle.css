@@ -1,0 +1,101 @@
+ /**
+ * Virtina
+ * @package    Virtina_Faq
+ * @copyright  Copyright (c) 2015-2016 Virtina. (http://www.virtina.com)
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+#accordion {
+    list-style: none;
+    padding: 0 0 0 0;
+}
+#accordion div {
+    display: block;
+    background-color: #e0e0e0;
+    font-weight: bold;
+    margin-bottom: 1px;
+    cursor: pointer;
+    padding: 8px 5px 8px 10px;
+    list-style: circle;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 2px;
+}
+#accordion ul {
+    list-style: none;
+    padding: 0 0 0 0;
+    border: 1px solid #e0e0e0;
+    border-radius: 3px;
+    margin-bottom: 2px;
+}
+#accordion ul{
+    display: none;
+}
+#accordion ul li {
+    font-weight: normal;
+    cursor: auto;
+    background-color: #fff;
+    padding: 0 0 0 7px;
+}
+#accordion a {
+    text-decoration: none;
+}
+#accordion a:hover {
+    text-decoration: underline;
+}
+.answerfaq {
+    font-family: georgia;
+    font-size: 14px;
+    font-style: oblique;
+    margin: 10px;
+}
+.answerfaq img { max-width: 100%; }
+
+.faq-index-index .buttons-set button.button { 
+	float:left;
+}
+.faqform {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-top:20px;
+}
+.questionfaq {
+    font-family: georgia;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: bold !important;
+    margin: 10px;
+}
+.question-ans {
+    background: rgba(0, 0, 0, 0) none repeat scroll 0 0 !important;
+    color: grey;
+    font-family: Georgia;
+    display: inline-block !important;
+    font-style: italic;
+}
+.faq {
+    width: 100%;
+    float: left;
+}
+ #question{
+	max-width:367px;
+ }
+#faqbutton{
+	float:left;
+}
+.faq-li {
+	list-style: outside none none !important;
+}
+.cms-page-view .pager{
+	float: none !important;
+}
+.std .faq ol li {
+    list-style: outside none none !important;
+    margin-left: 1em !important;
+}
+.faq li{
+    color: #636363;
+    font-family: Georgia,Times,"Times New Roman",serif !important;
+    font-size: 14px;
+    font-style: italic !important;
+    line-height: 24px;
+}
