@@ -1,16 +1,19 @@
 {
-    "name": "OpenMageModuleFostering/Virtina_webfaq",
+    "name": "OpenMageModuleFostering\/Virtina_webfaq",
     "type": "magento-module",
     "license": "OSL-3.0",
     "homepage": "",
     "description": "The Website FAQ extension is a simple tool to receive website related FAQs. Admin can view and answer the questions and also can display it in frontend.",
     "authors": [
-    {
-        "name": "Virtina",
-        "email": "developer@virtina.com"
-    }
-],
+        {
+            "name": "Virtina",
+            "email": "developer@virtina.com"
+        }
+    ],
     "suggest": {
-        "magento-hackathon/magento-composer-installer": "*"
-    }
+        "magento-hackathon\/magento-composer-installer": "*"
+    },
+    "keywords": [
+        "openmage-module"
+    ]
 }
