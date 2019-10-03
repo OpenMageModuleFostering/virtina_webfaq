@@ -1,3 +1,5 @@
+
+
 ## Original Package Description
 
 The Website FAQ extension is a simple tool to receive website related FAQs. Admin can view and answer the questions and also can display it in frontend.
